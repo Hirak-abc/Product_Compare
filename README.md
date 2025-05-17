@@ -14,7 +14,7 @@
 
 ## 📽️ Preview
 
-<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTF2a3E4aXBjYnVkYjYxOXZ0dWZid2FxeHZrc29pczJrbHMzN2xoNCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/BHNfhgU63qrks/giphy.gif" width="100%" alt="Demo GIF"/>
+<img src="https://raw.githubusercontent.com/Hirak-abc/Product_Compare/master/Screenshot.png" width="100%" alt="Demo Screenshot"/>
 
 ---
 
