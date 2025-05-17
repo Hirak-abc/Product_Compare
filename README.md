@@ -23,8 +23,6 @@
 - 🔍 **Product comparison** between **Amazon** and **Flipkart**
 - ⭐ Shows **ratings, reviews**, and **price history**
 - 📉 **Price trend visualization** using Buyhatke data
-- 🧠 Supports **multi-core processing** for faster scraping
-- 📦 Exports results to Excel
 - 🧼 Clean, responsive, and user-friendly interface
 
 ---
