@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Comparison Tool</title>
+    <style>
+        :root {
+            --primary: #2c6ed5;
+            --primary-light: #4b83e2;
+            --primary-dark: #1b5bbe;
+            --secondary: #f0f2f5;
+            --text-dark: #333;
+            --text-light: #6c757d;
+            --white: #fff;
+            --border: #ddd;
+            --success: #28a745;
+            --amazon: #ff9900;
+            --flipkart: #2874f0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--secondary);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+        }
+        
+        .product-name {
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        
+        .form-section {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: var(--secondary);
+            border-radius: 8px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        select, input[type="checkbox"] {
+            padding: 10px;
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+        }
+        
+        .checkbox-group input {
+            width: auto;
+            margin-right: 10px;
+        }
+        
+        .submit-btn {
+            padding: 12px 24px;
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .submit-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: var(--white);
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: var(--secondary);
+        }
+        
+        tr:hover {
+            background-color: rgba(44, 110, 213, 0.05);
+        }
+        
+        td {
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .platform-amazon {
+            display: flex;
+            align-items: center;
+        }
+        
+        .platform-amazon::before {
+            content: "";
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-color: var(--amazon);
+            margin-right: 10px;
+            border-radius: 3px;
+        }
+        
+        .platform-flipkart {
+            display: flex;
+            align-items: center;
+        }
+        
+        .platform-flipkart::before {
+            content: "";
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-color: var(--flipkart);
+            margin-right: 10px;
+            border-radius: 3px;
+        }
+        
+        .price {
+            font-weight: 600;
+            font-size: 18px;
+        }
+        
+        .rating {
+            display: flex;
+            align-items: center;
+        }
+        
+        .stars {
+            color: gold;
+            margin-left: 5px;
+        }
+        
+        .link-btn {
+            padding: 8px 12px;
+            background-color: var(--primary-light);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 14px;
+            border-radius: 4px;
+            margin-right: 10px;
+            transition: background-color 0.2s;
+            display: inline-block;
+        }
+        
+        .link-btn:hover {
+            background-color: var(--primary);
+        }
+        
+        .copy-btn {
+            background: none;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            font-size: 16px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .copy-btn:hover {
+            background-color: var(--secondary);
+        }
+        
+        .summary {
+            background-color: var(--secondary);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .summary-item {
+            flex-basis: 48%;
+            padding: 15px;
+            background: var(--white);
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
+        }
+        
+        .summary-label {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .summary-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--success);
+        }
+        
+        .buyhatke-section {
+            margin: 30px 0;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .buyhatke-header {
+            background-color: var(--primary-light);
+            color: var(--white);
+            padding: 15px;
+        }
+        
+        iframe {
+            border: none;
+            width: 100%;
+        }
+        
+        .loader {
+            border: 4px solid var(--secondary);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            color: #dc3545;
+            background-color: #f8d7da;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+        
+        #comparison-result {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Product Comparison Tool</h2>
+        
+        <div class="form-section">
+            <form id="comparison-form">
+                <div class="form-group">
+                    <label for="category">Select Product Category:</label>
+                    <select id="category" name="category" required>
+                        <option value="">-- Select Category --</option>
+                        <!-- Categories will be populated via JavaScript -->
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="product">Select Product:</label>
+                    <select id="product" name="product" required disabled>
+                        <option value="">-- Select Product --</option>
+                        <!-- Products will be populated via JavaScript based on selected category -->
+                    </select>
+                </div>
+                
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="include-buyhatke" name="include_buyhatke">
+                    <label for="include-buyhatke">Include BuyHatke Comprehensive Comparison</label>
+                </div>
+                
+                <button type="submit" class="submit-btn">Compare Now</button>
+            </form>
+        </div>
+        
+        <div class="loader" id="loader"></div>
+        <div class="error-message" id="error-message"></div>
+        
+        <div id="comparison-result">
+            <h2>Comparison Result for <span id="result-product-name" class="product-name"></span></h2>
+            
+            <style>
+                .table-responsive {
+                    width: 100%;
+                    overflow-x: auto;
+                }
+        
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    min-width: 600px; /* Prevents table from squishing */
+                }
+        
+                th, td {
+                    padding: 8px 12px;
+                    text-align: left;
+                    white-space: nowrap;
+                    border: 1px solid #ccc;
+                }
+        
+                .link-btn, .copy-btn {
+                    margin-right: 5px;
+                    padding: 5px 10px;
+                    font-size: 0.9rem;
+                    cursor: pointer;
+                }
+        
+                @media screen and (max-width: 600px) {
+                    .link-btn, .copy-btn {
+                        display: block;
+                        margin: 4px 0;
+                        width: 100%;
+                    }
+                }
+            </style>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Platform</th>
+                            <th>Price</th>
+                            <th>Rating</th>
+                            <th>Link</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><div class="platform-amazon">Amazon</div></td>
+                            <td class="price" id="amazon-price"></td>
+                            <td>
+                                <div class="rating">
+                                    <span id="amazon-rating"></span>
+                                    <div class="stars" id="amazon-stars"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="#" target="_blank" class="link-btn" id="amazon-link">View on Amazon</a>
+                                <button id="amazon-copy-btn" class="copy-btn">📋 Copy Link</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div class="platform-flipkart">Flipkart</div></td>
+                            <td class="price" id="flipkart-price"></td>
+                            <td>
+                                <div class="rating">
+                                    <span id="flipkart-rating"></span>
+                                    <div class="stars" id="flipkart-stars"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="#" target="_blank" class="link-btn" id="flipkart-link">View on Flipkart</a>
+                                <button id="flipkart-copy-btn" class="copy-btn">📋 Copy Link</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="summary">
+                <div class="summary-item">
+                    <div class="summary-label">Best Price</div>
+                    <div class="summary-value" id="better-price"></div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Better Rating</div>
+                    <div class="summary-value" id="better-rating"></div>
+                </div>
+            </div>
+
+            <div id="buyhatke-section" class="buyhatke-section" style="display: none;">
+                <div class="buyhatke-header">
+                    <h3>BuyHatke Comprehensive Comparison</h3>
+                </div>
+                <iframe id="buyhatke-iframe" height="600" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Replace with your actual API URL - by default assuming it's running locally
+        const API_BASE_URL = 'https://hirak888.pythonanywhere.com/api/';
+        
+        // Elements
+        const categorySelect = document.getElementById('category');
+        const productSelect = document.getElementById('product');
+        const includeBuyhatke = document.getElementById('include-buyhatke');
+        const comparisonForm = document.getElementById('comparison-form');
+        const loader = document.getElementById('loader');
+        const errorMessage = document.getElementById('error-message');
+        const comparisonResult = document.getElementById('comparison-result');
+        const buyhatkeSection = document.getElementById('buyhatke-section');
+        
+        // Fetch categories when page loads
+        document.addEventListener('DOMContentLoaded', fetchCategories);
+        
+        // Add event listeners
+        categorySelect.addEventListener('change', fetchProducts);
+        comparisonForm.addEventListener('submit', compareProducts);
+        
+        // Copy buttons
+        document.getElementById('amazon-copy-btn').addEventListener('click', () => {
+            copyToClipboard(document.getElementById('amazon-link').href);
+            showCopiedTooltip('amazon-copy-btn');
+        });
+        
+        document.getElementById('flipkart-copy-btn').addEventListener('click', () => {
+            copyToClipboard(document.getElementById('flipkart-link').href);
+            showCopiedTooltip('flipkart-copy-btn');
+        });
+        
+        // Fetch categories from API
+        function fetchCategories() {
+            showLoader();
+            fetch(`${API_BASE_URL}categories`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch categories');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    hideLoader();
+                    populateCategories(data);
+                })
+                .catch(error => {
+                    hideLoader();
+                    showError('Error fetching categories. Please try again later.');
+                    console.error('Error:', error);
+                });
+        }
+        
+        // Populate category dropdown
+        function populateCategories(categories) {
+            categorySelect.innerHTML = '<option value="">-- Select Category --</option>';
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category;
+                option.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+                categorySelect.appendChild(option);
+            });
+        }
+        
+        // Fetch products based on selected category
+        function fetchProducts() {
+            const selectedCategory = categorySelect.value;
+            
+            if (!selectedCategory) {
+                productSelect.innerHTML = '<option value="">-- Select Product --</option>';
+                productSelect.disabled = true;
+                return;
+            }
+            
+            showLoader();
+            fetch(`${API_BASE_URL}products?category=${selectedCategory}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch products');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    hideLoader();
+                    populateProducts(data);
+                })
+                .catch(error => {
+                    hideLoader();
+                    showError('Error fetching products. Please try again later.');
+                    console.error('Error:', error);
+                });
+        }
+        
+        // Populate product dropdown
+        function populateProducts(products) {
+            productSelect.innerHTML = '<option value="">-- Select Product --</option>';
+            products.forEach(product => {
+                const option = document.createElement('option');
+                option.value = product;
+                option.textContent = product;
+                productSelect.appendChild(option);
+            });
+            productSelect.disabled = false;
+        }
+        
+        // Compare products
+        function compareProducts(event) {
+            event.preventDefault();
+            
+            const selectedCategory = categorySelect.value;
+            const selectedProduct = productSelect.value;
+            const includeBuyhatkeValue = includeBuyhatke.checked ? 'yes' : 'no';
+            
+            if (!selectedCategory || !selectedProduct) {
+                showError('Please select both category and product.');
+                return;
+            }
+            
+            showLoader();
+            hideError();
+            
+            fetch(`${API_BASE_URL}compare?category=${selectedCategory}&product=${encodeURIComponent(selectedProduct)}&include_buyhatke=${includeBuyhatkeValue}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to compare products');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    hideLoader();
+                    displayComparisonResult(data);
+                })
+                .catch(error => {
+                    hideLoader();
+                    showError('Error comparing products. Please try again later.');
+                    console.error('Error:', error);
+                });
+        }
+        
+        // Display comparison result
+        function displayComparisonResult(data) {
+            // Set product name
+            document.getElementById('result-product-name').textContent = data.product_name;
+            
+            // Set Amazon data
+            document.getElementById('amazon-price').textContent = data.amazon_price !== null ? `₹${data.amazon_price.toLocaleString()}` : 'Not available';
+            document.getElementById('amazon-rating').textContent = data.amazon_rating > 0 ? data.amazon_rating.toFixed(1) : 'Not rated';
+            document.getElementById('amazon-stars').textContent = getStars(data.amazon_rating);
+            
+            const amazonLink = document.getElementById('amazon-link');
+            if (data.amazon_url) {
+                amazonLink.href = data.amazon_url;
+                amazonLink.classList.remove('disabled');
+            } else {
+                amazonLink.href = '#';
+                amazonLink.classList.add('disabled');
+            }
+            
+            // Set Flipkart data
+            document.getElementById('flipkart-price').textContent = data.flipkart_price !== null ? `₹${data.flipkart_price.toLocaleString()}` : 'Not available';
+            document.getElementById('flipkart-rating').textContent = data.flipkart_rating > 0 ? data.flipkart_rating.toFixed(1) : 'Not rated';
+            document.getElementById('flipkart-stars').textContent = getStars(data.flipkart_rating);
+            
+            const flipkartLink = document.getElementById('flipkart-link');
+            if (data.flipkart_url) {
+                flipkartLink.href = data.flipkart_url;
+                flipkartLink.classList.remove('disabled');
+            } else {
+                flipkartLink.href = '#';
+                flipkartLink.classList.add('disabled');
+            }
+            
+            // Set comparison summary
+            document.getElementById('better-price').textContent = data.better_price;
+            document.getElementById('better-rating').textContent = data.better_rating;
+            
+            // Set BuyHatke iframe if available
+            if (data.buyhatke_search_url) {
+                document.getElementById('buyhatke-iframe').src = data.buyhatke_search_url;
+                buyhatkeSection.style.display = 'block';
+            } else {
+                buyhatkeSection.style.display = 'none';
+            }
+            
+            // Show comparison result
+            comparisonResult.style.display = 'block';
+        }
+        
+        // Generate star symbols based on rating
+        function getStars(rating) {
+            const fullStars = Math.floor(rating);
+            const halfStar = rating % 1 >= 0.5 ? 1 : 0;
+            const emptyStars = 5 - fullStars - halfStar;
+            
+            return '★'.repeat(fullStars) + (halfStar ? '½' : '') + '☆'.repeat(emptyStars);
+        }
+        
+        // Copy to clipboard
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(
+                function() {
+                    // Success
+                }, 
+                function(err) {
+                    console.error('Failed to copy: ', err);
+                    alert('Failed to copy link. Please try again.');
+                }
+            );
+        }
+        
+        // Show copied tooltip
+        function showCopiedTooltip(btnId) {
+            const btn = document.getElementById(btnId);
+            const originalText = btn.textContent;
+            btn.textContent = "Copied!";
+            setTimeout(() => {
+                btn.textContent = originalText;
+            }, 2000);
+        }
+        
+        // Show loader
+        function showLoader() {
+            loader.style.display = 'block';
+        }
+        
+        // Hide loader
+        function hideLoader() {
+            loader.style.display = 'none';
+        }
+        
+        // Show error message
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+        
+        // Hide error message
+        function hideError() {
+            errorMessage.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
