@@ -16,7 +16,7 @@
 
 <img src="https://raw.githubusercontent.com/Hirak-abc/Product_Compare/master/Screenshot.png" width="100%" alt="Demo Screenshot"/>
 
----
+-----
 
 ## 🚀 Features
 
